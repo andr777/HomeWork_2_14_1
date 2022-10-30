@@ -74,9 +74,7 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public Integer[] sort() {
-//        return bubbleSort();
-//        return selectionSort();
-        return insertionSort();
+        return quickSort(items, 0, size - 1);
     };
 
     @Override
@@ -237,5 +235,36 @@ public class IntegerListImpl implements IntegerList {
         return items;
     }
 
+    public static Integer[] quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+        return arr;
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    private static void swapElements(Integer[] arr, int left, int right) {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+    }
 
 }
